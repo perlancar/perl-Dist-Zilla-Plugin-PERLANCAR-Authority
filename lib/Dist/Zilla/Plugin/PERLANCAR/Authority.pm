@@ -54,8 +54,8 @@ with(
 					close $fh or $self->log_fatal( "Unable to close $file - $!" );
 					$self->log_fatal( 'PAUSE user not found in ~/.pause' );
 				} else {
-                                    $self->log( 'PAUSE credentials not found in "config.ini" or "dist.ini" or "~/.pause", will be using "none" as the AUTHORITY' );
-                                    return 'none';
+                                    $self->log( 'PAUSE credentials not found in "config.ini" or "dist.ini" or "~/.pause", will be using "cpan:<none>" as the AUTHORITY' );
+                                    return 'cpan:<none>';
 				}
 			}
 		},
@@ -302,9 +302,10 @@ __PACKAGE__->meta->make_immutable;
 =head1 DESCRIPTION
 
 B<Fork note>: This plugin is a fork of L<Dist::Zilla::Plugin::Authority>. When
-PAUSE credential is not found, this plugin will set C<$AUTHORITY> to C<none>
-instead of bailing out. The rest is Dist::Zilla::Plugin::Authority's
-documentation.
+PAUSE credential is not found, this plugin will set C<$AUTHORITY> to C<<
+cpan:<none> >> instead of bailing out. TODO: bail if PAUSE credentials is not
+found and we are doing a release (instead of just 'dzil test' or 'dzil build').
+The rest is Dist::Zilla::Plugin::Authority's documentation.
 
 This plugin adds the authority data to your distribution. It adds the data to
 your modules and metadata. Normally it looks for the PAUSE author id in your
